@@ -23,7 +23,7 @@ int main()
 	// 平均、分散を求める
 	double mean = 0.0;
 	double standard_deviation = 0.0;
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < N; i++) {
 		double score = (double)value[i];
 		mean += score;
 		standard_deviation += score * score;
@@ -32,7 +32,7 @@ int main()
 	standard_deviation = sqrt(standard_deviation / (double)N - mean * mean);
 
 	// 偏差値を求める
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < N; i++) {
 		std_score[i] = (int)(10.0 * ((double)value[i] - mean) / standard_deviation) + 50;
 	}
 
@@ -40,7 +40,7 @@ int main()
 	printf_s("mean:%lf\n", mean);
 	printf_s("standard deviation:%lf\n", standard_deviation);
 
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < N; i++) {
 		printf_s("%d:%d\n", i, std_score[i]);
 	}
 
