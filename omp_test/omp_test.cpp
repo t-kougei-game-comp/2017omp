@@ -1,4 +1,6 @@
-﻿#include "stdafx.h"
+//プロジェクトのプロパティ\\C/C++\\言語からOpenMpのサポートを"はい"にする
+
+#include "stdafx.h"
 #include <math.h>
 
 int main()
@@ -23,20 +25,28 @@ int main()
 	// 平均、分散を求める
 	double mean = 0.0;
 	double standard_deviation = 0.0;
+
+	// 100回の計算を並行処理
+#pragma omp parallel for
 	for (int i = 0; i < N; i++) {
 		double score = (double)value[i];
 		mean += score;
 		standard_deviation += score * score;
+
 	}
+	// 逐次処理
 	mean /= (double)N;
 	standard_deviation = sqrt(standard_deviation / (double)N - mean * mean);
 
 	// 偏差値を求める
+	// ここも並行処理
+#pragma omp parallel for
 	for (int i = 0; i < N; i++) {
 		std_score[i] = (int)(10.0 * ((double)value[i] - mean) / standard_deviation) + 50;
 	}
 
 	// 表示
+	// 逐次処理
 	printf_s("mean:%lf\n", mean);
 	printf_s("standard deviation:%lf\n", standard_deviation);
 
@@ -44,6 +54,7 @@ int main()
 		printf_s("%d:%d\n", i, std_score[i]);
 	}
 
-    return 0;
+
+	return 0;
 }
 
