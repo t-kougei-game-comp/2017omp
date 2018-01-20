@@ -24,6 +24,7 @@ int main()
 	// 平均、分散を求める
 	double mean = 0.0;
 	double standard_deviation = 0.0;
+	#pragma omp parallel for
 	for (int i = 0; i < N; i++) {
 		double score = (double)value[i];
 		mean += score;
@@ -33,6 +34,7 @@ int main()
 	standard_deviation = sqrt(standard_deviation / (double)N - mean * mean);
 
 	// 偏差値を求める
+	#pragma omp parallel omp
 	for (int i = 0; i < N; i++) {
 		std_score[i] = (int)(10.0 * ((double)value[i] - mean) / standard_deviation) + 50;
 	}
