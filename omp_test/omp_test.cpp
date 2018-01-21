@@ -32,6 +32,7 @@ int main()
 	standard_deviation = sqrt(standard_deviation / (double)N - mean * mean);
 
 	// 偏差値を求める
+	#pragma omp parallel for
 	for (int i = 0; i < N; i++) {
 		std_score[i] = (int)(10.0 * ((double)value[i] - mean) / standard_deviation) + 50;
 	}
